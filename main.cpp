@@ -14,9 +14,9 @@ using namespace cv;
 // global variables ///////////////////////////////////////////////////////////////////////////////
 
 // PATH //
-string path = "/root/CarCount/";
+string path = "../";
 string videoName = "video_170330_2.avi";
-string pathSaveROIPicture = "/root/CarCount/Crops/";
+string pathSaveROIPicture = "../Crops/";
 
 int countSaveROIPicture = 0;
 bool savedROI = false;

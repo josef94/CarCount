@@ -1,6 +1,6 @@
 #include "FileHandler.h"
 
-char fileNameForBGS[256] = "/root/CarCount/textfile.txt";
+char fileNameForBGS[256] = "../textfile.txt";
 vector<string> listLine;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
