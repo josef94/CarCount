@@ -14,15 +14,19 @@ using namespace cv;
 // global variables ///////////////////////////////////////////////////////////////////////////////
 
 // PATH //
-string path = "../";
+string path = "../../";
 string videoName = "video_170330_2.avi";
 string pathSaveROIPicture = "../Crops/";
+string pathWeb = "/var/www/html/image/";
 
 int countSaveROIPicture = 0;
 bool savedROI = false;
 char file[256];
 int pixX1 = -1;
 int pixX2 = -1;
+
+//to save Picture for WebSite
+int countSaveWeb =29;
 double fps;
 
 // function prototypes ////////////////////////////////////////////////////////////////////////////
@@ -58,8 +62,8 @@ int main(void) {
 
 	//// PROGRAM START ////
 
-	//capVideo.open(0)   // for live video
-	capVideo.open(path + videoName); 	// for saved video
+	capVideo.open(0);   // for live video
+//	capVideo.open(path + videoName); 	// for saved video
 
 	if (!capVideo.isOpened()) {                                                 // if unable to open video file
 		cout << "error reading video file" << endl << endl;      // show error message
@@ -82,6 +86,13 @@ int main(void) {
 	// go trough, frame by frame
 	while (capVideo.isOpened()) {
 		countPic++;
+		countSaveWeb++;
+
+		if (countSaveWeb == 30){
+			string s = pathWeb + "live.jpg";	
+			imwrite(s, imgFrame1);
+			countSaveWeb = 0;	
+		}
 		if (countPic == 20) {
 			string s = pathSaveROIPicture + "bgs.tif";
 			imwrite(s, imgFrame1);
