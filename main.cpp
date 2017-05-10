@@ -15,6 +15,7 @@ using namespace cv;
 
 // PATH //
 string path = "../../";
+string videoSaveName = "video.avi";
 string videoName = "video_170330_2.avi";
 string pathSaveROIPicture = "../Crops/";
 string pathWeb = "/var/www/html/image/";
@@ -72,9 +73,28 @@ int main(void) {
 		cout << "start of video\n";
 	}
 
+	//Video Save Settings
+	capVideo.set(CV_CAP_PROP_FRAME_WIDTH, 640);
+	capVideo.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+	double dWidth = capVideo.get(CV_CAP_PROP_FRAME_WIDTH);
+	double dHeight = capVideo.get(CV_CAP_PROP_FRAME_HEIGHT);
+	Size frameSize(static_cast<int>(dWidth), static_cast<int>(dHeight));
+
+	
 	capVideo.read(imgFrame1);
 	capVideo.read(imgFrame2);
 	fps = capVideo.get(CV_CAP_PROP_FPS);
+
+	//Video
+	VideoWriter writer;
+
+	string videoPath = path + videoSaveName;
+	int codec = CV_FOURCC('M', 'J', 'P', 'G');  // select desired codec (must be available at runtime)
+	writer.open(videoPath, codec, fps, frameSize, true);
+
+	if (!writer.isOpened()) {
+		cout << "ERROR: Failed to write the video" << endl;
+	}
 
 	// Position of countingline
 	countLinePosition = (int)round((double)imgFrame1.cols * 0.5);
@@ -98,8 +118,13 @@ int main(void) {
 			imwrite(s, imgFrame1);
 		}
 
+	
 		imgFrame1Copy = imgFrame1.clone();
 		imgFrame2Copy = imgFrame2.clone();
+		
+		//write the frame into the file 
+		writer.write(imgFrame1);
+
 
 		cvtColor(imgFrame1Copy, imgFrame1Copy, CV_BGR2GRAY);
 		cvtColor(imgFrame2Copy, imgFrame2Copy, CV_BGR2GRAY);
