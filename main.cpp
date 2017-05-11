@@ -25,6 +25,7 @@ bool savedROI = false;
 char file[256];
 int pixX1 = -1;
 int pixX2 = -1;
+char test[256];
 
 //to save Picture for WebSite
 int countSaveWeb =29;
@@ -84,7 +85,11 @@ int main(void) {
 	capVideo.read(imgFrame1);
 	capVideo.read(imgFrame2);
 	fps = capVideo.get(CV_CAP_PROP_FPS);
+	
+	
 
+	sprintf(test, "FPS: %d\n", fps);
+	cout << test;
 	//Video
 	VideoWriter writer;
 
